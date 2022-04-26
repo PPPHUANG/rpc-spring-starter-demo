@@ -1,6 +1,7 @@
 package cn.ppphuang.democlient.controller;
 
 import cn.ppphuang.democlient.service.TestService;
+import cn.ppphuang.democlient.service.UserModel;
 import cn.ppphuang.demoservice.Person;
 import cn.ppphuang.demoservice.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,10 @@ public class DemoController {
     @GetMapping(value = "test3")
     public Result<List<Person>> test3(String pass) {
         return service.hello3("ppphuang");
+    }
+
+    @GetMapping(value = "async")
+    public UserModel async() {
+        return service.async();
     }
 }

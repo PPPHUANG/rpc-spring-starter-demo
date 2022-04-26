@@ -4,20 +4,40 @@ import cn.ppphuang.demoservice.DemoService;
 import cn.ppphuang.demoservice.Person;
 import cn.ppphuang.demoservice.Result;
 import cn.ppphuang.rpcspringstarter.annotation.RpcService;
+import cn.ppphuang.rpcspringstarter.client.async.AsyncCallBackExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RpcService
 public class DemoServiceImpl implements DemoService {
+
+    private static final Logger log = LoggerFactory.getLogger(AsyncCallBackExecutor.class);
+
     @Override
     public String hello(String name, Integer age) {
+        log.info("hello2 start");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("hello2 end");
         return name + age;
     }
 
     @Override
     public String hello(String name) {
-        return "a1";
+        log.info("hello1 start");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("hello1 end");
+        return name;
     }
 
     @Override
