@@ -52,4 +52,20 @@ public interface DemoService {
      * @return List<Integer>
      */
     List<Integer> helloList(Integer age);
+
+    /**
+     * 获取名字
+     *
+     * @param name 名字
+     * @return String
+     */
+    String getName(String name);
+
+    /**
+     * 获取年纪
+     *
+     * @param age 年纪
+     * @return Integer
+     */
+    Integer getAge(Integer age);
 }

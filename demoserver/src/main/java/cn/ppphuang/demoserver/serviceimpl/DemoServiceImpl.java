@@ -69,4 +69,24 @@ public class DemoServiceImpl implements DemoService {
     public List<Integer> helloList(Integer age) {
         return Arrays.asList(1, 2);
     }
+
+    @Override
+    public String getName(String name) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "name is " + name;
+    }
+
+    @Override
+    public Integer getAge(Integer age) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return age + 1;
+    }
 }

@@ -32,6 +32,6 @@ public class DemoController {
 
     @GetMapping(value = "async")
     public UserModel async() {
-        return service.async();
+        return service.async2();
     }
 }

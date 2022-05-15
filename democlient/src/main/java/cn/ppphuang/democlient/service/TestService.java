@@ -1,6 +1,7 @@
 package cn.ppphuang.democlient.service;
 
 import cn.ppphuang.democlient.asyncutil.AsyncExecutor;
+import cn.ppphuang.democlient.asyncutil.DefaultValueHandle;
 import cn.ppphuang.democlient.asyncutil.TimeoutUtils;
 import cn.ppphuang.demoservice.DemoService;
 import cn.ppphuang.demoservice.Person;
@@ -54,4 +55,42 @@ public class TestService {
         //总体2秒执行时间
         return userModelCompletableFuture.join();
     }
+
+    public UserModel async1() {
+        CompletableFuture<String> ppp1 = demoServiceAsyncExecutor.async(service -> service.getName("ppp"))
+                .handle(new DefaultValueHandle<>(true, "pppp", "service.getName", "ppp"));
+        CompletableFuture<Integer> ppp2 = demoServiceAsyncExecutor.async(service -> service.getAge(18));
+        CompletableFuture<Integer> timeoutPpp = TimeoutUtils.timeout(ppp2, 3, TimeUnit.SECONDS)
+                .handle(new DefaultValueHandle<>(true, 20, "service.getAge", 18));
+        CompletableFuture<UserModel> userModelCompletableFuture = CompletableFuture.completedFuture(new UserModel())
+                .thenCombine(ppp1, ((userModel, s) -> {
+                    userModel.setName(s);
+                    return userModel;
+                })).thenCombine(timeoutPpp, ((userModel, s) -> {
+                    userModel.setAge(s);
+                    return userModel;
+                })).exceptionally(e -> new UserModel());
+        //总体2秒执行时间
+        return userModelCompletableFuture.join();
+    }
+
+    public UserModel async2() {
+        CompletableFuture<String> ppp1 = demoServiceAsyncExecutor.async(service -> service.getName("ppp"))
+                .handle(new DefaultValueHandle<>(true, "pppp", "service.getName", "ppp"));
+        CompletableFuture<Integer> ppp2 = demoServiceAsyncExecutor.async(service -> service.getAge(18));
+        //超时处理
+        CompletableFuture<Integer> timeoutPpp = TimeoutUtils.timeout(ppp2, 1, TimeUnit.SECONDS)
+                .handle(new DefaultValueHandle<>(true, 20, "service.getAge", 18));
+        //总体2秒执行时间
+        UserModel userModel1 = CompletableFuture.allOf(ppp1, timeoutPpp).thenApply(r -> {
+            String name = ppp1.join();
+            Integer age = timeoutPpp.join();
+            UserModel userModel = new UserModel();
+            userModel.setName(name);
+            userModel.setAge(age);
+            return userModel;
+        }).join();
+        return userModel1;
+    }
+
 }

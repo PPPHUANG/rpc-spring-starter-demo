@@ -49,4 +49,14 @@ public class DemoServiceImpl2 implements DemoService {
     public List<Integer> helloList(Integer age) {
         return Arrays.asList(2, 2);
     }
+
+    @Override
+    public String getName(String name) {
+        return null;
+    }
+
+    @Override
+    public Integer getAge(Integer age) {
+        return null;
+    }
 }

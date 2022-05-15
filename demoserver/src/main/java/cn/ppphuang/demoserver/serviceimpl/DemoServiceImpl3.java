@@ -51,6 +51,16 @@ public class DemoServiceImpl3 implements DemoService, PersionService {
     }
 
     @Override
+    public String getName(String name) {
+        return null;
+    }
+
+    @Override
+    public Integer getAge(Integer age) {
+        return null;
+    }
+
+    @Override
     public String talk() {
         return "talk";
     }
