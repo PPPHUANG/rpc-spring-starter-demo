@@ -1,12 +1,12 @@
 package cn.ppphuang.democlient.service;
 
-import cn.ppphuang.democlient.asyncutil.AsyncExecutor;
-import cn.ppphuang.democlient.asyncutil.DefaultValueHandle;
-import cn.ppphuang.democlient.asyncutil.TimeoutUtils;
 import cn.ppphuang.demoservice.DemoService;
 import cn.ppphuang.demoservice.Person;
 import cn.ppphuang.demoservice.Result;
 import cn.ppphuang.rpcspringstarter.annotation.InjectService;
+import cn.ppphuang.rpcspringstarter.client.async.AsyncExecutor;
+import cn.ppphuang.rpcspringstarter.client.async.DefaultValueHandle;
+import cn.ppphuang.rpcspringstarter.client.async.TimeoutUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

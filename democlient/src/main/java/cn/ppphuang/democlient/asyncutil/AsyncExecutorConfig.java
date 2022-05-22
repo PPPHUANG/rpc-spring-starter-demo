@@ -1,6 +1,7 @@
 package cn.ppphuang.democlient.asyncutil;
 
 import cn.ppphuang.demoservice.DemoService;
+import cn.ppphuang.rpcspringstarter.client.async.AsyncExecutor;
 import cn.ppphuang.rpcspringstarter.client.net.ClientProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
