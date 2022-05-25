@@ -3,6 +3,7 @@ package cn.ppphuang.democlient.service;
 public class UserModel {
     String name;
     Integer age;
+    String hello;
 
     public String getName() {
         return name;
@@ -20,11 +21,20 @@ public class UserModel {
         this.age = age;
     }
 
+    public String getHello() {
+        return hello;
+    }
+
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", hello=" + hello +
                 '}';
     }
 }
