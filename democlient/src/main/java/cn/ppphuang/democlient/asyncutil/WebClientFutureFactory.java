@@ -11,11 +11,13 @@ public class WebClientFutureFactory {
 
     public static <T> CompletableFuture<T> getCompletableFuture(Mono<T> mono) {
         CompletableFuture<T> completableFuture = new CompletableFuture<>();
-        mono.doOnError(completableFuture::completeExceptionally)
-                .subscribe(result -> {
-                    completableFuture.complete(result);
-                    log.info("mono.subscribe execute thread: {}", Thread.currentThread().getName());
-                });
+        mono.doOnError(throwable -> {
+            completableFuture.completeExceptionally(throwable);
+            log.error("mono.doOnError throwable:{}", throwable.getMessage());
+        }).subscribe(result -> {
+            completableFuture.complete(result);
+            log.debug("mono.subscribe execute thread: {}", Thread.currentThread().getName());
+        });
         return completableFuture;
     }
 }

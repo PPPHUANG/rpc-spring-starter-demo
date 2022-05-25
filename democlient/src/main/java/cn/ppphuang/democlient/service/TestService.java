@@ -111,18 +111,15 @@ public class TestService {
 //                .bodyToMono(HttpResult.class)
                 .bodyToMono(new ParameterizedTypeReference<HttpResult<String>>() {
                 })
-                //异常处理
+                //异常处理 有onErrorReturn时doOnError不会触发，所以不需要后续在CompletableFuture中handle处理异常
+                // 如果不使用onErrorReturn，建议在后续CompletableFuture中handle处理异常
                 .onErrorReturn(new HttpResult<>(201, "default", "default hello"))
                 //超时处理
                 .timeout(Duration.ofSeconds(3))
-                //错误记录
-                .doOnError(e -> {
-                    log.error("doOnError: {}", e.getMessage());
-                })
                 //返回值过滤
                 .filter(httpResult -> httpResult.code == 200)
                 //默认值
-                .defaultIfEmpty(new HttpResult<String>())
+                .defaultIfEmpty(new HttpResult<>(201, "defaultIfEmpty", "defaultIfEmpty hello"))
                 //失败重试
                 .retryWhen(Retry.backoff(1, Duration.ofSeconds(1)));
         CompletableFuture<HttpResult<String>> stringCompletableFuture = WebClientFutureFactory.getCompletableFuture(userMono);
